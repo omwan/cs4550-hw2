@@ -1,0 +1,36 @@
+body {
+    font-size:15px;
+    font-family:arial;
+}
+
+#calculator {
+    width:300px;
+    background:#ccc;
+    padding:10px;
+}
+
+#calculator input {
+    width:280px;
+    border:0px;
+    padding:20px;
+    box-sizing:border-box;
+    font-size:20px;
+    margin:10px;
+}
+
+#calculator button {
+    width:100%;
+    border:none;
+    border-radius: 0px;
+    height:50px;
+    margin:0px;
+    font-size:20px;
+}
+
+#calculator table {
+    width:100%;
+}
+
+#calculator td {
+    width:25%;
+}
