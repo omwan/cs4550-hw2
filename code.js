@@ -1,3 +1,4 @@
+//given an operator and pair of numbers, carries out the operation.
 var calculate = function(operator, number1, number2) {
     var num1 = parseFloat(number1);
     var num2 = parseFloat(number2);
@@ -13,6 +14,7 @@ var calculate = function(operator, number1, number2) {
     }
 };
 
+//main function to handle inputs and displays.
 (function() {
     var buttons = document.getElementsByTagName("button");
     var input = document.getElementById("calc-input");
@@ -39,9 +41,10 @@ var calculate = function(operator, number1, number2) {
                 case "-":
                 case "×":
                 case "÷":
-                    if (operation == null || number1 == null) {
+                    if (operation == null) {
                         number1 = input.value;
                     } else if (!operationSelected) {
+                        //don't repeatedly calculate on operation button press
                         number2 = input.value;
                         var output = calculate(operation, number1, number2);
                         input.value = output;
@@ -55,20 +58,26 @@ var calculate = function(operator, number1, number2) {
                     if (operationSelected) {
                         input.value = "0.";
                         operationSelected = false;
-                    }
-                    if (!input.value.includes(".")) {
-                        input.value += command;
+                    } else {
+                        if (!input.value.includes(".")) {
+                            input.value += command;
+                        }
                     }
                     break;
                 default:
+                    //append or overwrite current displayed value
+                    //depending on if an operation has been selected.
                     if (operationSelected) {
                         input.value = command;
                         operationSelected = false;
-                    } else if (input.value != "0") {
-                        input.value += command;
+                    } else {
+                        if (input.value != "0") {
+                            input.value += command;
+                        } else {
+                            input.value = command;
+                        }
                     }
             }
-            // console.log(command, operationSelected, operation);
         });
     }
 })();
