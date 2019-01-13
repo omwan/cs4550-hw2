@@ -22,7 +22,7 @@ var calculate = function(operator, number1, number2) {
         var number1 = input.value;
         var number2 = null;
         var operation = null;
-        var operationCompleted = false;
+        var operationSelected = true;
 
         button.addEventListener("click", function() {
             command = button.innerHTML;
@@ -33,40 +33,42 @@ var calculate = function(operator, number1, number2) {
                     number1 = 0;
                     number2 = null;
                     operation = null;
+                    operationSelected = true;
                     break;
                 case "+/=":
                 case "-":
                 case "×":
                 case "÷":
-                    if (operation != null && number1 != null) {
+                    if (operation == null || number1 == null) {
+                        number1 = input.value;
+                    } else if (!operationSelected) {
                         number2 = input.value;
                         var output = calculate(operation, number1, number2);
                         input.value = output;
                         number1 = output;
                         number2 = null;
-                        operationCompleted = true;
-                    } else {
-                        number1 = input.value;
-                        operation = command;
                     }
+                    operation = command;
+                    operationSelected = true;
                     break;
                 case ".":
+                    if (operationSelected) {
+                        input.value = "0.";
+                        operationSelected = false;
+                    }
                     if (!input.value.includes(".")) {
                         input.value += command;
                     }
                     break;
                 default:
-                    if (input.value != "0" && operation == null) {
-                        input.value += command;
-                    } else {
-                        //start new operation
-                        if (operationCompleted) {
-                            number1 = null;
-                            operationCompleted = false;
-                        }
+                    if (operationSelected) {
                         input.value = command;
+                        operationSelected = false;
+                    } else if (input.value != "0") {
+                        input.value += command;
                     }
             }
+            // console.log(command, operationSelected, operation);
         });
     }
 })();
